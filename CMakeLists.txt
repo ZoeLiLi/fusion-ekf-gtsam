@@ -1,11 +1,16 @@
-cmake_minimum_required(VERSION 3.0)
-set(CMAKE_CXX_STANDARD 11)
-project(fusion-ekf-gtsam)
+cmake_minimum_required(Version 3.0)
+set(CXX_FLAGS_STANDARD 11)
+project(fusion)
+set(TARGET_LIB ${PROJECT_NAME})
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/multi_sensor_fusion)
+file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp
+			    ${PROJECT_SOURCE_DIR}/include/*.h)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
-option(ENABLE_EXAMPLE_PROJECT       "enable example project or not"  OFF)
+add_library(${TARGET_NAME} static ${SRC_FILES})
 
-if(ENABLE_EXAMPLE_PROJECT)
-    add_subdirectory(${PROJECT_SOURCE_DIR}/example)
+option(ENABLE_TEST_PROJECT "build test project" ON)
+
+if(ENABLE_TEST_PROJECT)
+  add_subdirectory(test)
 endif()
